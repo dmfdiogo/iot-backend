@@ -1,4 +1,4 @@
-from app.database.database import Base
+from app.database.pgsql_database import Base
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 
 class User(Base):

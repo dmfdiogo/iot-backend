@@ -20,6 +20,4 @@
 2. Clone this repository: `git clone https://github.com/dmfdiogo/Iot-backend.git`
 3. Navigate to the project directory: `cd my-awesome-project`
 4. Install dependencies: `pip install -r requirements.txt`
-5. run docker commands:
-    5.1 docker build --no-cache -t my-api-img .
-    5.2 docker-compose up -d
+5. run docker commands: `docker-compose up -d`

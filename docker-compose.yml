@@ -8,20 +8,22 @@ services:
     env_file:
       - .env
   db:
-    image: postgres
+    image: postgres:latest
     networks:
       - iot
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
-    ports:
-      - "5432:5432"
     env_file:
       - .env
   influxdb:
-    image: influxdb
+    image: influxdb:latest
     networks:
       - iot
+    ports:
+      - "8086:8086"
     environment:
       DOCKER_INFLUXDB_INIT_MODE: setup
       DOCKER_INFLUXDB_INIT_USERNAME: ${INFLUXDB_USERNAME}
@@ -29,12 +31,10 @@ services:
       DOCKER_INFLUXDB_INIT_ORG: ${INFLUXDB_ORG}
       DOCKER_INFLUXDB_INIT_BUCKET: ${INFLUXDB_BUCKET}
       DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: ${INFLUXDB_TOKEN}
-    ports:
-      - "8086:8086"
     env_file:
     - .env
   fastapi:
-    image: my-api-img
+    build: .
     networks:
       - iot
     ports:
@@ -44,8 +44,5 @@ services:
     depends_on:
       - db
       - influxdb
-    environment:
-      DATABASE_URL: "postgresql://postgres:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:5432/${POSTGRES_DB}"
-      INFLUXDB_URL: "http://influxdb:8086"
 networks:
   iot:
